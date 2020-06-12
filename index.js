@@ -1,16 +1,16 @@
 const http = require('http')
 
-const hostname = '192.168.140.156'
+const hostname = '127.0.0.1'
 const port = 3000
 
 const server = http.createServer(function(req) {
   req.setEncoding('utf8')
-  const chunks = []
+  const a = []
   req.on('data', function(chunk) {
-    chunks.push(chunk)
+    a.push(chunk)
   })
   req.on('end', function() {
-    console.log(chunks.join())
+    console.log(a.join())
   })
 })
 
