@@ -1,27 +1,21 @@
-const http = require('http')
+const {createServer} = require('http')
+const {stdout} = process
 
 const hostname = '127.0.0.1'
 const port = 3000
 
-const server = http.createServer(function(req) {
+const server = createServer(function(req, res) {
   req.setEncoding('utf8')
   const a = []
   req.on('data', function(chunk) {
     a.push(chunk)
   })
   req.on('end', function() {
-    console.log(a.join())
+    stdout.write(`${a.join()}\n`)
+    res.end()
   })
 })
 
 server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`)
+  stdout.write(`Server running at http://${hostname}:${port}/\n`)
 })
-
-server.setTimeout(0)
-
-setTimeout(function() {
-  const req = http.request(`http://${hostname}:${port}`, {method: 'POST'})
-  req.write('Hey there')
-  req.end()
-}, 2000)
